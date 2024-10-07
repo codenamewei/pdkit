@@ -56,6 +56,7 @@ def load_cloudupdrs_data(filename, convert_times=1000000000.0):
         data = {'td': time_difference, 'x': data_m[:, 1], 'y': data_m[:, 2], 'z': data_m[:, 3],
                 'mag_sum_acc': magnitude_sum_acceleration}
         data_frame = pd.DataFrame(data, index=date_times, columns=['td', 'x', 'y', 'z', 'mag_sum_acc'])
+
         return data_frame
     except IOError as e:
         ierr = "({}): {}".format(e.errno, e.strerror)
