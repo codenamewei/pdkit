@@ -530,21 +530,22 @@ def peakdet(signal, delta, x=None):
 
     for i in np.arange(len(v)):
         this = v[i]
-        if this > mx:
+
+        if this > mx:#np.all(this > mx):
             mx = this
             mxpos = x[i]
-        if this < mn:
+        if this < mn:#np.all(this < mn):
             mn = this
             mnpos = x[i]
 
         if lookformax:
-            if this < mx - delta:
+            if this < mx - delta:#np.all(this < mx - delta):
                 maxtab.append((mxpos, mx))
                 mn = this
                 mnpos = x[i]
                 lookformax = False
         else:
-            if this > mn + delta:
+            if this > mn + delta:#np.all(this > mn + delta):
                 mintab.append((mnpos, mn))
                 mx = this
                 mxpos = x[i]
@@ -582,7 +583,7 @@ def compute_interpeak(data, sample_rate):
     freq = np.abs(freqs[imax_freq])
 
     # Inter-peak samples:
-    interpeak = np.int(np.round(sample_rate / freq))
+    interpeak = int(np.round(sample_rate / freq))
 
     return interpeak
 
@@ -717,7 +718,7 @@ def autocorrelate(data, unbias=2, normalize=2):
 
     # Autocorrelation:
     coefficients = correlate(data, data, 'full')
-    size = np.int(coefficients.size/2)
+    size = int(coefficients.size/2)
     coefficients = coefficients[size:]
     N = coefficients.size
 
@@ -835,7 +836,7 @@ def ExpandSegmentIndicies(endPoint):
     startPoint = -1
     lbls = np.array([])
     for segment in range(endPoint.size):
-        lbls = np.append( arr=lbls ,values=np.repeat(segment, np.int(endPoint[segment]-startPoint)) )
+        lbls = np.append( arr=lbls ,values=np.repeat(segment, int(endPoint[segment]-startPoint)) )
         startPoint = endPoint[segment]
     return lbls
 
@@ -940,12 +941,12 @@ def plot_walks_turns(df, window=[1, 1, 1]):
     for w in walks:
 
         plt.plot(w, df[w], 'o')
-        plt.text(np.mean(w, dtype=np.int), top_of_graph, len(w), fontsize=22)
+        plt.text(np.mean(w, dtype=int), top_of_graph, len(w), fontsize=22)
         #plt.vlines(x=w, ymin=contour_heights[w], ymax=df[w])
 
     for t in turns:
         plt.plot(t, df[t], 's')
-#         plt.text(np.mean(t, dtype=np.int), top_of_graph, len(t), fontsize=22)
+#         plt.text(np.mean(t, dtype=int), top_of_graph, len(t), fontsize=22)
         #plt.vlines(x=t, ymin=contour_heights[t], ymax=df[t])
 
 def centroid_sort(centroids):
